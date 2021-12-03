@@ -1,0 +1,16 @@
+{
+  "resourceName": "images",
+  "policyUUID": "89f34485",
+  "bucketName": "postagram8e4528313856464e8eb3cecd989a7714",
+  "storageAccess": "authAndGuest",
+  "guestAccess": [
+    "READ"
+  ],
+  "authAccess": [
+    "CREATE_AND_UPDATE",
+    "READ",
+    "DELETE"
+  ],
+  "triggerFunction": "NONE",
+  "groupAccess": {}
+}
