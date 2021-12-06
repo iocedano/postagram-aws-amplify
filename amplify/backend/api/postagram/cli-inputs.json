@@ -6,7 +6,16 @@
     "gqlSchemaPath": "/Users/iocedano/LearningSection/postagram/amplify/backend/api/postagram/schema.graphql",
     "defaultAuthType": {
       "mode": "API_KEY",
-      "expirationTime": 7
-    }
+      "expirationTime": 365,
+      "apiKeyExpirationDate": "2022-12-03T21:26:14.811Z",
+      "keyDescription": "da2-nubnmbufkjdodlhx7roqi3xvqi"
+    },
+    "conflictResolution": {},
+    "additionalAuthTypes": [
+      {
+        "mode": "AMAZON_COGNITO_USER_POOLS",
+        "cognitoUserPoolId": "authpostagram94e9d9d9"
+      }
+    ]
   }
 }

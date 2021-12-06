@@ -1,6 +1,6 @@
 projects:
   postagram:
-    schemaPath: src/graphql/schema.json
+    schemaPath: amplify/backend/api/postagram/build/schema.graphql
     includes:
       - src/graphql/**/*.js
     excludes:

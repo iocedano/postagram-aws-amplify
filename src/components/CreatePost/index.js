@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import Button from '../Button';
 import { v4 as uuid } from 'uuid';
-import { Storage, API } from 'aws-amplify';
+import { Storage, API, Auth } from 'aws-amplify';
 import { createPost } from '../../graphql/mutations';
 import { containerStyle, inputStyle, imageStyle, savingMessageStyle } from './styles';
 
@@ -41,14 +41,17 @@ export default function CreatePost({
       const { name, description, location, image } = formState;
       if (!name || !description || !location || !image.name) return;
       updateFormState(currentState => ({ ...currentState, saving: true }));
+      const { username } = await Auth.currentAuthenticatedUser();
       const postId = uuid();
-      const postInfo = { name, description, location, image: formState.image.name, id: postId };
+      const postInfo = { name, description, location, image: formState.image.name, owner: username, id: postId };
 
       await Storage.put(formState.image.name, formState.image.fileInfo);
       await API.graphql({
-        query: createPost, variables: { input: postInfo }
+        query: createPost,
+        variables: { input: postInfo },
+        authMode: 'AMAZON_COGNITO_USER_POOLS'
       });
-      updatePosts([...posts, { ...postInfo, image: formState.file }]);
+      updatePosts([...posts, { ...postInfo, image: formState.file, owner: username }]);
       updateFormState(currentState => ({ ...currentState, saving: false }));
       updateOverlayVisibility(false);
     } catch (err) {

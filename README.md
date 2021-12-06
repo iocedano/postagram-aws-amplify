@@ -71,8 +71,6 @@ This section has moved here: [https://facebook.github.io/create-react-app/docs/t
 
 
 
-GraphQL endpoint: https://h2tgdrkgjfguhabsnkzgh5u2ne.appsync-api.us-east-2.amazonaws.com/graphql
-GraphQL API KEY: da2-nubnmbufkjdodlhx7roqi3xvqi
 
 
 @Note:

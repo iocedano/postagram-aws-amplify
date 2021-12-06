@@ -15,10 +15,11 @@ import Header from './components/Header';
 import CreatePost from './components/CreatePost';
 import Button from './components/Button';
 
-function App({  signOut }) {
+function App({  signOut, user }) {
   /* create a couple of pieces of initial state */
   const [showOverlay, updateOverlayVisibility] = useState(false);
   const [posts, updatePosts] = useState([]);
+  const [myPosts, updateMyPosts] = useState([]);
 
   /* fetch posts when component loads */
   useEffect(() => {
@@ -27,7 +28,10 @@ function App({  signOut }) {
   
   async function fetchPosts() {
     /* query the API, ask for 100 items */
-    let postData = await API.graphql({ query: listPosts, variables: { limit: 100 }});
+    let postData = await API.graphql({ 
+      query: listPosts,
+      variables: { limit: 100 }
+    });
     let postsArray = postData.data.listPosts.items;
     /* map over the image keys in the posts array, get signed image URLs for each image */
     postsArray = await Promise.all(postsArray.map(async post => {
@@ -39,7 +43,10 @@ function App({  signOut }) {
     setPostState(postsArray);
   }
   async function setPostState(postsArray) {
+    const myPostData = postsArray.filter(p => p.owner === user.username);
+    console.log(user)
     updatePosts(postsArray);
+    updateMyPosts(myPostData);
   }
   return (
     <>
@@ -49,8 +56,9 @@ function App({  signOut }) {
             <hr className={dividerStyle} />
             <Button title="New Post" onClick={() => updateOverlayVisibility(true)} />
             <Routes>
-              <Route exact path="/" element={   <Posts posts={posts} />} />
+              <Route exact path="/" element={<Posts posts={posts} />} />
               <Route path="/post/:id" element={<Post />} />
+              <Route path="/myposts" element={<Posts posts={myPosts} />} />
             </Routes>
           </div>
           <button onClick={signOut}>Sign Out</button>
